@@ -1,157 +1,112 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>IT Community Pro - Прокачай карьеру в IT</title>
+    <title>IT Mentor Pro - Консультации и менторство в IT</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 1. Hero Section -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-bg">
-            <span class="hero-emoji" id="hero-emoji"></span>
+            <span class="hero-emoji">🚀</span>
         </div>
         <div class="container">
-            <h1 class="hero-title" id="hero-title"></h1>
-            <h2 class="hero-headline" id="hero-headline"></h2>
-            <p class="hero-description" id="hero-description"></p>
-            <button class="btn btn-primary btn-large" id="hero-cta"></button>
-        </div>
-    </section>
-
-    <!-- 2. Target Audience -->
-    <section class="section target-audience">
-        <div class="container">
-            <h2 class="section-title" id="target-title"></h2>
-            <div class="problems-grid" id="problems-grid"></div>
+            <h1 class="hero-title">IT Mentor Pro</h1>
+            <h2 class="hero-headline">Войди в IT или прокачай карьеру с экспертом</h2>
+            <p class="hero-description">Персональные консультации и полное менторство от практикующего специалиста с проверенными результатами</p>
+            <button class="btn btn-primary btn-large pulse" onclick="scrollToServices()">Выбрать услугу</button>
         </div>
     </section>
 
-    <!-- 3. Value Proposition -->
-    <section class="section value">
+    <!-- Services Section -->
+    <section class="section services" id="services">
         <div class="container">
-            <h2 class="section-title" id="value-title"></h2>
-            <div class="benefits-grid" id="benefits-grid"></div>
-        </div>
-    </section>
+            <h2 class="section-title">Мои услуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📝</div>
+                    <h3 class="service-title">Консультация по резюме и трудоустройству</h3>
+                    <p class="service-description">Отревьюю твое резюме, отвечу на любые вопросы по откликам и стратегии поиска работы</p>
+                    <div class="service-features">
+                        <div class="feature">✓ Детальный разбор резюме</div>
+                        <div class="feature">✓ Стратегия поиска работы</div>
+                        <div class="feature">✓ Оптимизация откликов</div>
+                        <div class="feature">✓ Подготовка к собеседованиям</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="selectService(1)">Заказать консультацию</button>
+                </div>
 
-    <!-- 4. What's Inside -->
-    <section class="section inside">
-        <div class="container">
-            <h2 class="section-title" id="inside-title"></h2>
-            <div class="features-carousel">
-                <div class="carousel-container" id="features-carousel"></div>
-                <div class="carousel-dots" id="features-dots"></div>
+                <div class="service-card featured">
+                    <div class="popular-badge">Популярное</div>
+                    <div class="service-icon">🎯</div>
+                    <h3 class="service-title">Менторство с 0 в IT до первого оффера</h3>
+                    <p class="service-description">Полное сопровождение: от изучения основ до получения первой работы в IT</p>
+                    <div class="service-features">
+                        <div class="feature">✓ Персональный план обучения</div>
+                        <div class="feature">✓ Еженедельные созвоны</div>
+                        <div class="feature">✓ Помощь с портфолио</div>
+                        <div class="feature">✓ Подготовка к собеседованиям</div>
+                        <div class="feature">✓ Помощь в поиске работы</div>
+                    </div>
+                    <div class="pricing-info">
+                        <div class="pricing-text">Фиксированная предоплата + % с первой ЗП</div>
+                        <div class="pricing-note">Я заинтересован в вашем трудоустройстве</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="selectService(2)">Начать менторство</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. About -->
-    <section class="section about">
+    <!-- Results Section -->
+    <section class="section results">
         <div class="container">
-            <h2 class="section-title" id="about-title"></h2>
-            <div class="about-card">
-                <div class="about-header">
-                    <div class="about-avatar">👨‍💻</div>
-                    <div class="about-info">
-                        <h3 id="about-name"></h3>
-                        <p id="about-position"></p>
-                        <span id="about-experience"></span>
+            <h2 class="section-title">Мои результаты</h2>
+            <div class="results-card">
+                <div class="results-header">
+                    <h3>Последняя активность на рынке труда</h3>
+                    <span class="results-period">Апрель 2025</span>
+                </div>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-value">31</div>
+                        <div class="result-label">HR написали в Telegram за неделю</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value">470</div>
+                        <div class="result-label">Откликов отправлено</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value">1047</div>
+                        <div class="result-label">Показов резюме</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value">405</div>
+                        <div class="result-label">Просмотров резюме</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value">11</div>
+                        <div class="result-label">Собеседований назначено в первые дни</div>
                     </div>
                 </div>
-                <p class="about-story" id="about-story"></p>
-                <div class="achievements" id="achievements"></div>
+                <a href="#" class="results-link" onclick="showResults()">Посмотреть подробные результаты 📊</a>
             </div>
         </div>
     </section>
 
-    <!-- 6. Stats -->
-    <section class="section stats">
-        <div class="container">
-            <h2 class="section-title" id="stats-title"></h2>
-            <div class="stats-grid" id="stats-grid"></div>
-        </div>
-    </section>
-
-    <!-- 7. Testimonials -->
-    <section class="section testimonials">
-        <div class="container">
-            <h2 class="section-title" id="testimonials-title"></h2>
-            <div class="testimonials-carousel">
-                <div class="carousel-container" id="testimonials-carousel"></div>
-                <div class="carousel-dots" id="testimonials-dots"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. Pricing -->
-    <section class="section pricing">
-        <div class="container">
-            <h2 class="section-title" id="pricing-title"></h2>
-            <div class="pricing-carousel">
-                <div class="carousel-container" id="pricing-carousel"></div>
-                <div class="carousel-dots" id="pricing-dots"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 9. How to Join -->
-    <section class="section how-to-join">
-        <div class="container">
-            <h2 class="section-title" id="join-title"></h2>
-            <div class="steps-grid" id="steps-grid"></div>
-            <div class="guarantee" id="guarantee"></div>
-            <button class="btn btn-primary btn-large" id="join-cta"></button>
-        </div>
-    </section>
-
-    <!-- 10. Bonus -->
-    <section class="section bonus">
-        <div class="container">
-            <h2 class="section-title" id="bonus-title"></h2>
-            <div class="bonus-grid" id="bonus-grid"></div>
-            <div class="bonus-total">
-                <span>Общая стоимость: <strong id="bonus-value"></strong></span>
-                <span class="bonus-free">Бесплатно при покупке любого тарифа!</span>
-            </div>
-            <button class="btn btn-secondary" id="bonus-cta"></button>
-        </div>
-    </section>
-
-    <!-- 11. FAQ -->
-    <section class="section faq">
-        <div class="container">
-            <h2 class="section-title" id="faq-title"></h2>
-            <div class="faq-list" id="faq-list"></div>
-        </div>
-    </section>
-
-    <!-- 12. Final CTA -->
+    <!-- CTA Section -->
     <section class="section final-cta">
         <div class="container">
-            <h2 class="final-title" id="final-title"></h2>
-            <p class="final-subtitle" id="final-subtitle"></p>
-            <div class="urgency" id="urgency"></div>
-            <button class="btn btn-primary btn-large pulse" id="final-cta-btn"></button>
-            <p class="final-guarantee" id="final-guarantee"></p>
+            <h2 class="final-title">Готов помочь тебе достичь успеха в IT</h2>
+            <p class="final-subtitle">Выбери подходящую услугу и начни менять свою карьеру уже сегодня</p>
+            <button class="btn btn-primary btn-large pulse" onclick="scrollToServices()">Выбрать услугу</button>
+            <p class="final-guarantee">Персональный подход к каждому клиенту</p>
         </div>
     </section>
 
-    <!-- Modal -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title"></h3>
-                <button class="modal-close" id="modal-close">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-body"></div>
-        </div>
-    </div>
-
-    <script src="content.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
