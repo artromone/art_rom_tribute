@@ -248,6 +248,19 @@ body {
     height: 100%;
 }
 
+.pricing-card {
+    pointer-events: auto !important;
+    touch-action: pan-y !important;
+}
+
+.pricing * {
+    touch-action: pan-y !important;
+}
+
+.pricing .carousel-container {
+    touch-action: pan-x !important;
+}
+
 .feature-icon, .testimonial-avatar {
     font-size: 48px;
     margin-bottom: 16px;
@@ -766,17 +779,27 @@ html {
     touch-action: manipulation;
 }
 
+.pricing {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    max-height: none !important;
+    height: auto !important;
+}
+
 .pricing-carousel {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    overflow-x: auto !important;
+    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-height: none !important;
+    height: auto !important;
     padding-bottom: 16px;
 }
 
 .carousel-container {
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+    scroll-snap-type: x mandatory !important;
+    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch !important;
 }
 
 .pulse {
@@ -798,4 +821,5 @@ html {
     cursor: pointer;
     transition: all 0.1s ease;
 }
+
 
