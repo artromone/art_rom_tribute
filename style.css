@@ -1002,3 +1002,114 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Мобильные улучшения */
+
+/* 1. Убираем фиксированную кнопку на телефонах */
+@media (max-width: 768px) {
+  .fixed-bottom-btn {
+    display: none !important;
+  }
+}
+
+/* 2. Уменьшаем высоту hero секции с 60% до 40% */
+@media (max-width: 768px) {
+  .hero {
+    height: 40vh; /* 40% от высоты экрана */
+    padding: 2rem 0 3rem;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* 3. Знакомые боли и Проверь себя рядом + исправление цветов в темном режиме */
+@media (max-width: 768px) {
+  .target-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .problem-item, .checklist-item {
+    color: var(--text-color);
+    background: var(--card-bg);
+  }
+}
+
+[data-theme="dark"] {
+  .problem-item, .checklist-item {
+    color: var(--text-color);
+    background: var(--card-bg);
+  }
+}
+
+/* 4. Карусель для "Что тебя ждет внутри сообщества" */
+@media (max-width: 768px) {
+  #inside-content {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  #inside-content > div {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    margin-right: 1rem;
+  }
+}
+
+/* 5. Достижения в 2 ряда на телефоне */
+@media (max-width: 768px) {
+  .expert-achievements {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* 6. Карусель для отзывов */
+@media (max-width: 768px) {
+  #testimonials-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  #testimonials-grid > div {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    margin-right: 1rem;
+  }
+}
+
+/* 7. Карусель для тарифов */
+@media (max-width: 768px) {
+  #pricing-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  #pricing-grid > div {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    margin-right: 1rem;
+  }
+}
+
+/* Общие стили для каруселей */
+@media (max-width: 768px) {
+  #inside-content::-webkit-scrollbar,
+  #testimonials-grid::-webkit-scrollbar,
+  #pricing-grid::-webkit-scrollbar {
+    display: none;
+  }
+  
+  #inside-content,
+  #testimonials-grid,
+  #pricing-grid {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
