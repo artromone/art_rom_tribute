@@ -766,3 +766,36 @@ html {
     touch-action: manipulation;
 }
 
+.pricing-carousel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    max-height: 320px;
+}
+
+.carousel-container {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+}
+
+.pulse {
+    animation: pulse 1.33s infinite;
+}
+
+#bonus-cta {
+    max-width: 60%;
+    margin: 0 auto;
+    display: block;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--hint-color);
+    opacity: 0.3;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
