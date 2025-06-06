@@ -35,13 +35,9 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
-    /* ИСПРАВЛЕНО: Убрал user-select: none и overflow-x: hidden */
-    -webkit-user-select: text;
-    user-select: text;
-    /* ИСПРАВЛЕНО: Разрешил вертикальную прокрутку */
-    overflow-y: auto;
-    /* ИСПРАВЛЕНО: Добавил touch-action для корректной работы на мобильных */
-    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow-x: hidden;
 }
 
 .container {
@@ -140,8 +136,6 @@ body {
     transition: all 0.3s ease;
     text-align: center;
     -webkit-tap-highlight-color: transparent;
-    /* ИСПРАВЛЕНО: Изменил touch-action для лучшей совместимости */
-    touch-action: auto;
 }
 
 .btn-primary {
@@ -235,9 +229,6 @@ body {
     padding: 0 16px;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    /* ИСПРАВЛЕНО: Изменил touch-action для поддержки вертикальной прокрутки */
-    touch-action: pan-y pan-x;
-    -webkit-overflow-scrolling: touch;
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -255,8 +246,6 @@ body {
     padding: 24px;
     box-shadow: var(--shadow);
     height: 100%;
-    /* ИСПРАВЛЕНО: Добавил touch-action для pricing карточек */
-    touch-action: auto;
 }
 
 .feature-icon, .testimonial-avatar {
@@ -317,8 +306,6 @@ body {
     position: relative;
     border: 2px solid transparent;
     transition: all 0.3s ease;
-    /* ИСПРАВЛЕНО: Явно разрешил все виды касаний для pricing карточек */
-    touch-action: auto;
 }
 
 .pricing-card.popular {
@@ -398,8 +385,6 @@ body {
     opacity: 0.3;
     cursor: pointer;
     transition: all 0.3s ease;
-    /* ИСПРАВЛЕНО: Изменил touch-action */
-    touch-action: auto;
 }
 
 .dot.active {
@@ -606,8 +591,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* ИСПРАВЛЕНО: Изменил touch-action */
-    touch-action: auto;
 }
 
 .faq-icon {
@@ -684,8 +667,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    /* ИСПРАВЛЕНО: Добавил touch-action для модальных окон */
-    touch-action: auto;
 }
 
 .modal.active {
@@ -700,8 +681,6 @@ body {
     max-height: 80vh;
     overflow-y: auto;
     animation: slideUp 0.3s ease;
-    /* ИСПРАВЛЕНО: Добавил touch-action для контента модального окна */
-    touch-action: auto;
 }
 
 @keyframes slideUp {
@@ -734,8 +713,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* ИСПРАВЛЕНО: Изменил touch-action */
-    touch-action: auto;
 }
 
 .modal-body {
@@ -777,26 +754,31 @@ body {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
-    /* ИСПРАВЛЕНО: Добавил стили для мобильных устройств */
-    body {
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .pricing-card {
-        min-height: auto;
-        -webkit-overflow-scrolling: touch;
-    }
 }
 
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
-    /* ИСПРАВЛЕНО: Добавил overflow для html */
-    overflow-y: auto;
 }
 
-/* ИСПРАВЛЕНО: Убрал ограничивающие touch-action свойства и заменил на auto */
+/* Touch improvements */
+.btn, .faq-question, .modal-close {
+    touch-action: manipulation;
+}
+
+.pricing-carousel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    padding-bottom: 16px;
+}
+
+.carousel-container {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+}
+
 .pulse {
     animation: pulse 2.5s infinite;
 }
@@ -815,19 +797,5 @@ html {
     opacity: 0.3;
     cursor: pointer;
     transition: all 0.1s ease;
-    touch-action: auto;
 }
 
-/* ИСПРАВЛЕНО: Убрал проблематичные touch-action свойства */
-.pricing-carousel {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    touch-action: auto;
-    padding-bottom: 16px;
-}
-
-.carousel-container {
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    touch-action: auto;
-}
