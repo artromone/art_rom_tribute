@@ -3,37 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Telegram Mini App</title>
+    <title>Мой Creative Hub</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🚀 Мое Mini App</h1>
-            <p>Добро пожаловать!</p>
-        </header>
-        
-        <main>
-            <div class="user-info">
-                <div id="user-avatar"></div>
-                <p id="user-name">Загрузка...</p>
-                <p id="user-status"></p>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="creator-avatar">
+                <img src="https://via.placeholder.com/80x80/007AFF/ffffff?text=A" alt="Avatar" id="creator-avatar">
+            </div>
+            <div class="creator-info">
+                <h1 id="creator-name">Art Rom</h1>
+                <p id="creator-title">Creative Developer & Designer</p>
+                <div class="stats">
+                    <span class="stat">
+                        <span class="stat-number">1.2k</span>
+                        <span class="stat-label">подписчиков</span>
+                    </span>
+                    <span class="stat">
+                        <span class="stat-number">156</span>
+                        <span class="stat-label">постов</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-tab="subscriptions">Подписки</button>
+        <button class="nav-tab" data-tab="services">Услуги</button>
+        <button class="nav-tab" data-tab="about">О себе</button>
+        <button class="nav-tab" data-tab="my-subscription">Моя подписка</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Subscriptions Tab -->
+        <section id="subscriptions" class="tab-content active">
+            <div class="section-header">
+                <h2>Уровни подписки</h2>
+                <p>Выберите подходящий уровень поддержки</p>
             </div>
             
-            <div class="actions">
-                <button id="main-button" class="btn">Главное действие</button>
-                <button id="data-button" class="btn btn-secondary">Отправить данные</button>
-                <button id="close-button" class="btn btn-danger">Закрыть</button>
+            <div class="subscription-levels" id="subscription-levels">
+                <!-- Динамически загружается из data.js -->
+            </div>
+        </section>
+
+        <!-- Services Tab -->
+        <section id="services" class="tab-content">
+            <div class="section-header">
+                <h2>Разовые услуги</h2>
+                <p>Индивидуальные предложения</p>
             </div>
             
-            <div class="info">
-                <h3>Информация о приложении:</h3>
-                <p id="app-info">Инициализация...</p>
+            <div class="services-grid" id="services-grid">
+                <!-- Динамически загружается из data.js -->
             </div>
-        </main>
+        </section>
+
+        <!-- About Tab -->
+        <section id="about" class="tab-content">
+            <div class="section-header">
+                <h2>Обо мне</h2>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Привет! Я Art Rom — разработчик и дизайнер с 5+ лет опыта в создании цифровых продуктов.</p>
+                    
+                    <h3>Что я делаю:</h3>
+                    <ul>
+                        <li>🚀 Разрабатываю Telegram Mini Apps</li>
+                        <li>🎨 Создаю современные веб-интерфейсы</li>
+                        <li>📱 Проектирую мобильные приложения</li>
+                        <li>🔧 Консультирую по техническим вопросам</li>
+                    </ul>
+
+                    <h3>Мой стек:</h3>
+                    <div class="tech-stack">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Telegram API</span>
+                        <span class="tech-tag">Figma</span>
+                        <span class="tech-tag">CSS</span>
+                    </div>
+
+                    <h3>Достижения:</h3>
+                    <ul>
+                        <li>🏆 50+ успешных проектов</li>
+                        <li>⭐ 4.9/5 средний рейтинг клиентов</li>
+                        <li>🎓 Сертифицированный разработчик</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Subscription Tab -->
+        <section id="my-subscription" class="tab-content">
+            <div class="section-header">
+                <h2>Моя подписка</h2>
+            </div>
+            
+            <div class="subscription-status" id="subscription-status">
+                <div class="status-card">
+                    <div class="status-icon">👤</div>
+                    <h3>Статус подписки</h3>
+                    <p class="status-text">У вас нет активной подписки</p>
+                    <button class="btn btn-primary" onclick="showSubscriptions()">
+                        Выбрать подписку
+                    </button>
+                </div>
+            </div>
+
+            <div class="subscription-history">
+                <h3>История платежей</h3>
+                <div class="history-list" id="payment-history">
+                    <div class="history-item">
+                        <span class="history-date">Нет данных</span>
+                        <span class="history-amount">—</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Subscription Modal -->
+    <div class="modal" id="subscription-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Подписка</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Динамический контент -->
+            </div>
+        </div>
     </div>
-    
+
+    <!-- Service Modal -->
+    <div class="modal" id="service-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="service-modal-title">Услуга</h3>
+                <button class="modal-close" onclick="closeServiceModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="service-modal-body">
+                <!-- Динамический контент -->
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
