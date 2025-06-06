@@ -1,21 +1,48 @@
-
 // Инициализация Telegram Web App
 const tg = window.Telegram?.WebApp;
 
-if (tg) {
+// Инициализация приложения
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация Telegram Web App
+    initTelegram();
+    
+    // Загрузка контента
+    loadContent();
+    
+    // Инициализация интерактивности
+    initInteractivity();
+    
+    // Скрытие загрузки
+    setTimeout(() => {
+        document.getElementById('loading').classList.add('hidden');
+    }, 1000);
+});
+
+// Инициализация Telegram Web App
+function initTelegram() {
+    if (!tg) return;
+    
     tg.ready();
     tg.expand();
+    
+    // Применение темы
     applyTheme();
+    
+    // Настройка главной кнопки
     setupMainButton();
-    initUser();
+    
+    // Обработка событий
+    tg.onEvent('themeChanged', applyTheme);
+    tg.onEvent('mainButtonClicked', handleMainButtonClick);
 }
 
-// Применение темы
 function applyTheme() {
-    const theme = tg?.colorScheme || 'light';
+    if (!tg) return;
+    
+    const theme = tg.colorScheme || 'light';
     document.documentElement.setAttribute('data-theme', theme);
     
-    if (tg?.themeParams) {
+    if (tg.themeParams) {
         const root = document.documentElement;
         Object.entries(tg.themeParams).forEach(([key, value]) => {
             root.style.setProperty(`--tg-theme-${key.replace(/_/g, '-')}`, value);
@@ -23,383 +50,352 @@ function applyTheme() {
     }
 }
 
-// Настройка главной кнопки
 function setupMainButton() {
     if (!tg) return;
     
-    tg.MainButton.text = 'Поддержать автора';
+    tg.MainButton.text = content.fixedButton;
     tg.MainButton.color = '#007AFF';
     tg.MainButton.show();
-    
-    tg.MainButton.onClick(() => {
-        showSubscriptions();
-    });
 }
 
-// Инициализация пользователя
-function initUser() {
-    if (!tg) return;
-    
-    const user = tg.initDataUnsafe?.user;
-    if (user) {
-        // Можно обновить данные пользователя
-        console.log('User:', user);
-    }
+function handleMainButtonClick() {
+    scrollToSection('pricing');
 }
 
-// Навигация по табам
-document.addEventListener('DOMContentLoaded', function() {
-    initNavigation();
-    loadSubscriptionLevels();
-    loadServices();
-    loadUserSubscription();
-});
-
-function initNavigation() {
-    const navTabs = document.querySelectorAll('.nav-tab');
-    const tabContents = document.querySelectorAll('.tab-content');
-    
-    navTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const targetTab = tab.dataset.tab;
-            
-            // Обновляем активные табы
-            navTabs.forEach(t => t.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-            
-            tab.classList.add('active');
-            document.getElementById(targetTab).classList.add('active');
-            
-            // Обновляем главную кнопку в зависимости от таба
-            updateMainButton(targetTab);
-        });
-    });
+// Загрузка контента
+function loadContent() {
+    loadHeroContent();
+    loadTargetAudienceContent();
+    loadValuePropContent();
+    loadWhatsInsideContent();
+    loadAboutExpertContent();
+    loadStatsResultsContent();
+    loadTestimonialsContent();
+    loadPricingContent();
+    loadHowToJoinContent();
+    loadBonusSectionContent();
+    loadFAQContent();
+    loadFinalCTAContent();
+    loadFixedButtonContent();
 }
 
-function updateMainButton(activeTab) {
-    if (!tg) return;
-    
-    switch(activeTab) {
-        case 'subscriptions':
-            tg.MainButton.text = 'Выбрать подписку';
-            tg.MainButton.show();
-            break;
-        case 'services':
-            tg.MainButton.text = 'Заказать услугу';
-            tg.MainButton.show();
-            break;
-        case 'about':
-            tg.MainButton.text = 'Связаться со мной';
-            tg.MainButton.show();
-            break;
-        case 'my-subscription':
-            tg.MainButton.text = 'Управление подпиской';
-            tg.MainButton.show();
-            break;
-    }
+function loadHeroContent() {
+    const hero = content.hero;
+    document.getElementById('hero-badge').textContent = hero.badge;
+    document.getElementById('hero-title').textContent = hero.title;
+    document.getElementById('hero-subtitle').textContent = hero.subtitle;
+    document.getElementById('hero-cta-btn').textContent = hero.ctaButton;
+    document.getElementById('hero-guarantee').textContent = hero.guarantee;
 }
 
-// Загрузка уровней подписки
-function loadSubscriptionLevels() {
-    const container = document.getElementById('subscription-levels');
+function loadTargetAudienceContent() {
+    const target = content.targetAudience;
+    document.getElementById('target-title').textContent = target.title;
     
-    subscriptionLevels.forEach(level => {
-        const card = createSubscriptionCard(level);
-        container.appendChild(card);
-    });
-}
-
-function createSubscriptionCard(level) {
-    const card = document.createElement('div');
-    card.className = `subscription-card ${level.popular ? 'popular' : ''}`;
-    
-    card.innerHTML = `
-        <div class="subscription-header">
-            <div class="subscription-info">
-                <h3>${level.name}</h3>
-                <p>${level.description}</p>
+    // Проблемы
+    const problemsContainer = document.getElementById('target-problems');
+    problemsContainer.innerHTML = `
+        <h3>Знакомые боли?</h3>
+        ${target.problems.map(problem => `
+            <div class="problem-item">
+                <span class="problem-icon">${problem.icon}</span>
+                <span>${problem.text}</span>
             </div>
-            <div class="subscription-price">
-                <div class="price-amount">${level.price} ₽</div>
-                <div class="price-period">/${level.period}</div>
+        `).join('')}
+    `;
+    
+    // Чек-лист
+    const checklistContainer = document.getElementById('target-checklist');
+    checklistContainer.innerHTML = `
+        <h3>${target.checklist.title}</h3>
+        ${target.checklist.items.map(item => `
+            <div class="checklist-item">
+                <span class="checklist-icon">✓</span>
+                <span>${item.replace('✅ ', '')}</span>
+            </div>
+        `).join('')}
+    `;
+}
+
+function loadValuePropContent() {
+    const valueProp = content.valueProp;
+    document.getElementById('value-title').textContent = valueProp.title;
+    
+    const valueGrid = document.getElementById('value-grid');
+    valueGrid.innerHTML = valueProp.values.map(value => `
+        <div class="value-card animate-on-scroll">
+            <div class="value-icon">${value.icon}</div>
+            <h3 class="value-title">${value.title}</h3>
+            <p>${value.description}</p>
+        </div>
+    `).join('');
+}
+
+function loadWhatsInsideContent() {
+    const inside = content.whatsInside;
+    document.getElementById('inside-title').textContent = inside.title;
+    
+    const insideContent = document.getElementById('inside-content');
+    insideContent.innerHTML = inside.content.map(item => `
+        <div class="inside-card animate-on-scroll">
+            <div class="inside-format">${item.format}</div>
+            <h3 class="inside-title">${item.title}</h3>
+            <p class="inside-description">${item.description}</p>
+            <div class="inside-frequency">${item.frequency}</div>
+        </div>
+    `).join('');
+}
+
+function loadAboutExpertContent() {
+    const expert = content.aboutExpert;
+    document.getElementById('expert-photo').src = expert.photo;
+    document.getElementById('expert-name').textContent = expert.name;
+    document.getElementById('expert-title').textContent = expert.title;
+    document.getElementById('expert-story').innerHTML = expert.story;
+    
+    const achievementsContainer = document.getElementById('expert-achievements');
+    achievementsContainer.innerHTML = expert.achievements.map(achievement => `
+        <div class="achievement-item">
+            <span class="achievement-number">${achievement.number}</span>
+            <span class="achievement-text">${achievement.text}</span>
+        </div>
+    `).join('');
+}
+
+function loadStatsResultsContent() {
+    const stats = content.statsResults;
+    document.getElementById('stats-title').textContent = stats.title;
+    
+    const statsGrid = document.getElementById('stats-grid');
+    statsGrid.innerHTML = stats.stats.map(stat => `
+        <div class="stat-card animate-on-scroll">
+            <span class="stat-number">${stat.number}</span>
+            <span class="stat-label">${stat.label}</span>
+        </div>
+    `).join('');
+    
+    const resultsContent = document.getElementById('results-content');
+    resultsContent.innerHTML = `
+        <h3>${stats.results.title}</h3>
+        <ul style="list-style: none; padding: 0; margin-top: 1.5rem;">
+            ${stats.results.items.map(item => `<li style="margin-bottom: 1rem; font-size: 1.1rem;">${item}</li>`).join('')}
+        </ul>
+    `;
+}
+
+function loadTestimonialsContent() {
+    const testimonials = content.testimonials;
+    document.getElementById('testimonials-title').textContent = testimonials.title;
+    
+    const testimonialsGrid = document.getElementById('testimonials-grid');
+    testimonialsGrid.innerHTML = testimonials.items.map(testimonial => `
+        <div class="testimonial-card animate-on-scroll">
+            <div class="testimonial-quote">"${testimonial.quote}"</div>
+            <div class="testimonial-author">
+                <div class="author-avatar">${testimonial.author}</div>
+                <div class="author-info">
+                    <div class="author-name">${testimonial.name}</div>
+                    <div class="author-title">${testimonial.title}</div>
+                </div>
             </div>
         </div>
-        <div class="subscription-features">
-            <ul>
-                ${level.features.map(feature => `<li>${feature}</li>`).join('')}
+    `).join('');
+}
+
+function loadPricingContent() {
+    const pricing = content.pricing;
+    document.getElementById('pricing-title').textContent = pricing.title;
+    
+    const pricingGrid = document.getElementById('pricing-grid');
+    pricingGrid.innerHTML = pricing.plans.map(plan => `
+        <div class="pricing-card ${plan.featured ? 'featured' : ''} animate-on-scroll">
+            <h3 class="pricing-title">${plan.title}</h3>
+            <div class="pricing-price">${plan.price}₽</div>
+            <div class="pricing-period">/${plan.period}</div>
+            <ul class="pricing-features">
+                ${plan.features.map(feature => `<li>${feature}</li>`).join('')}
             </ul>
+            <button class="btn btn-primary" onclick="handleSubscribe('${plan.title}', ${plan.price})">${plan.button}</button>
         </div>
-        <button class="btn btn-primary" onclick="openSubscriptionModal(${level.id})">
-            Подписаться
-        </button>
+    `).join('');
+}
+
+function loadHowToJoinContent() {
+    const join = content.howToJoin;
+    document.getElementById('join-title').textContent = join.title;
+    
+    const joinSteps = document.getElementById('join-steps');
+    joinSteps.innerHTML = join.steps.map(step => `
+        <div class="join-step animate-on-scroll">
+            <div class="step-number">${step.number}</div>
+            <h4 class="step-title">${step.title}</h4>
+            <p class="step-description">${step.description}</p>
+        </div>
+    `).join('');
+    
+    document.getElementById('join-cta-btn').textContent = join.ctaButton;
+    
+    const joinGuarantees = document.getElementById('join-guarantees');
+    joinGuarantees.innerHTML = join.guarantees.map(guarantee => `
+        <div class="guarantee-item">
+            <span>${guarantee}</span>
+        </div>
+    `).join('');
+}
+
+function loadBonusSectionContent() {
+    const bonus = content.bonusSection;
+    document.getElementById('bonus-title').textContent = bonus.title;
+    
+    const bonusContent = document.getElementById('bonus-content');
+    bonusContent.innerHTML = bonus.bonuses.map(item => `
+        <div class="bonus-card animate-on-scroll">
+            <div class="bonus-icon">${item.icon}</div>
+            <h3 class="bonus-title">${item.title}</h3>
+            <p>${item.description}</p>
+            <div class="bonus-value">${item.value}</div>
+        </div>
+    `).join('');
+}
+
+function loadFAQContent() {
+    const faq = content.faq;
+    document.getElementById('faq-title').textContent = faq.title;
+    
+    const faqList = document.getElementById('faq-list');
+    faqList.innerHTML = faq.items.map((item, index) => `
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(${index})">
+                ${item.question}
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                ${item.answer}
+            </div>
+        </div>
+    `).join('');
+}
+
+function loadFinalCTAContent() {
+    const finalCta = content.finalCta;
+    document.getElementById('final-cta-title').textContent = finalCta.title;
+    document.getElementById('final-cta-subtitle').textContent = finalCta.subtitle;
+    document.getElementById('final-cta-btn').textContent = finalCta.button;
+    document.getElementById('final-cta-note').textContent = finalCta.note;
+    
+    const urgencyContainer = document.getElementById('final-cta-urgency');
+    urgencyContainer.innerHTML = `
+        <h4>${finalCta.urgency.title}</h4>
+        <p>${finalCta.urgency.text}</p>
     `;
-    
-    return card;
 }
 
-// Загрузка услуг
-function loadServices() {
-    const container = document.getElementById('services-grid');
-    
-    services.forEach(service => {
-        const card = createServiceCard(service);
-        container.appendChild(card);
-    });
+function loadFixedButtonContent() {
+    document.getElementById('fixed-btn').textContent = content.fixedButton;
 }
 
-function createServiceCard(service) {
-    const card = document.createElement('div');
-    card.className = 'service-card';
+// Интерактивность
+function initInteractivity() {
+    // Анимации при скролле
+    initScrollAnimations();
     
-    card.innerHTML = `
-        <div class="service-icon">${service.icon}</div>
-        <h3>${service.name}</h3>
-        <p>${service.description}</p>
-        <div class="service-price">${service.price}</div>
-        <button class="btn btn-outline" onclick="openServiceModal(${service.id})">
-            Подробнее
-        </button>
-    `;
+    // Фиксированная кнопка
+    initFixedButton();
     
-    return card;
+    // Плавный скролл для кнопок
+    initSmoothScroll();
 }
 
-// Модальные окна
-function openSubscriptionModal(levelId) {
-    const level = subscriptionLevels.find(l => l.id === levelId);
-    if (!level) return;
-    
-    const modal = document.getElementById('subscription-modal');
-    const title = document.getElementById('modal-title');
-    const body = document.getElementById('modal-body');
-    
-    title.textContent = level.name;
-    body.innerHTML = `
-        <div class="modal-price">
-            <div class="modal-price-amount">${level.price} ₽</div>
-            <div class="modal-price-period">/${level.period}</div>
-        </div>
-        <p>${level.description}</p>
-        <div class="modal-features">
-            <h4>Что включено:</h4>
-            <ul>
-                ${level.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
-        </div>
-        <button class="btn btn-success" onclick="subscribe(${levelId})">
-            Оформить подписку
-        </button>
-        <button class="btn btn-secondary" onclick="closeModal()" style="margin-top: 12px;">
-            Отмена
-        </button>
-    `;
-    
-    modal.classList.add('active');
-}
-
-function openServiceModal(serviceId) {
-    const service = services.find(s => s.id === serviceId);
-    if (!service) return;
-    
-    const modal = document.getElementById('service-modal');
-    const title = document.getElementById('service-modal-title');
-    const body = document.getElementById('service-modal-body');
-    
-    title.textContent = service.name;
-    body.innerHTML = `
-        <div class="service-icon" style="font-size: 48px; text-align: center; margin-bottom: 16px;">
-            ${service.icon}
-        </div>
-        <p style="margin-bottom: 20px;">${service.description}</p>
-        <div style="background: var(--secondary-bg); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-            <div style="font-size: 24px; font-weight: 700; color: var(--primary-color); margin-bottom: 4px;">
-                ${service.price}
-            </div>
-            <div style="color: var(--hint-color); font-size: 14px;">
-                Срок выполнения: ${service.deliveryTime}
-            </div>
-        </div>
-        <div class="modal-features">
-            <h4>Что входит в услугу:</h4>
-            <ul>
-                ${service.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
-        </div>
-        <button class="btn btn-primary" onclick="orderService(${serviceId})">
-            Заказать
-        </button>
-        <button class="btn btn-secondary" onclick="closeServiceModal()" style="margin-top: 12px;">
-            Закрыть
-        </button>
-    `;
-    
-    modal.classList.add('active');
-}
-
-function closeModal() {
-    document.getElementById('subscription-modal').classList.remove('active');
-}
-
-function closeServiceModal() {
-    document.getElementById('service-modal').classList.remove('active');
-}
-
-// Действия
-function subscribe(levelId) {
-    const level = subscriptionLevels.find(l => l.id === levelId);
-    if (!level) return;
-    
-    // Отправляем данные боту
-    if (tg) {
-        tg.sendData(JSON.stringify({
-            action: 'subscribe',
-            level_id: levelId,
-            level_name: level.name,
-            price: level.price,
-            user_id: tg.initDataUnsafe?.user?.id
-        }));
-    }
-    
-    // Симуляция успешной подписки
-    userData.subscription = {
-        level: level,
-        startDate: new Date(),
-        nextPayment: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-    };
-    
-    userData.paymentHistory.unshift({
-        date: new Date(),
-        amount: level.price,
-        level: level.name
-    });
-    
-    loadUserSubscription();
-    closeModal();
-    
-    if (tg) {
-        tg.showAlert(`Подписка "${level.name}" успешно оформлена!`);
-    }
-}
-
-function orderService(serviceId) {
-    const service = services.find(s => s.id === serviceId);
-    if (!service) return;
-    
-    // Отправляем данные боту
-    if (tg) {
-        tg.sendData(JSON.stringify({
-            action: 'order_service',
-            service_id: serviceId,
-            service_name: service.name,
-            price: service.price,
-            user_id: tg.initDataUnsafe?.user?.id
-        }));
-    }
-    
-    closeServiceModal();
-    
-    if (tg) {
-        tg.showAlert(`Заявка на "${service.name}" отправлена! Я свяжусь с вами в ближайшее время.`);
-    }
-}
-
-function loadUserSubscription() {
-    const statusContainer = document.getElementById('subscription-status');
-    const historyContainer = document.getElementById('payment-history');
-    
-    if (userData.subscription) {
-        const sub = userData.subscription;
-        statusContainer.innerHTML = `
-            <div class="status-card">
-                <div class="status-icon">⭐</div>
-                <h3>Активная подписка</h3>
-                <p class="status-text">
-                    <strong>${sub.level.name}</strong><br>
-                    Следующее списание: ${sub.nextPayment.toLocaleDateString('ru-RU')}
-                </p>
-                <button class="btn btn-secondary" onclick="cancelSubscription()">
-                    Отменить подписку
-                </button>
-            </div>
-        `;
-    } else {
-        statusContainer.innerHTML = `
-            <div class="status-card">
-                <div class="status-icon">👤</div>
-                <h3>Статус подписки</h3>
-                <p class="status-text">У вас нет активной подписки</p>
-                <button class="btn btn-primary" onclick="showSubscriptions()">
-                    Выбрать подписку
-                </button>
-            </div>
-        `;
-    }
-    
-    // История платежей
-    if (userData.paymentHistory.length > 0) {
-        historyContainer.innerHTML = userData.paymentHistory.map(payment => `
-            <div class="history-item">
-                <span class="history-date">${payment.date.toLocaleDateString('ru-RU')}</span>
-                <span class="history-amount">${payment.amount} ₽</span>
-            </div>
-        `).join('');
-    } else {
-        historyContainer.innerHTML = `
-            <div class="history-item">
-                <span class="history-date">Нет данных</span>
-                <span class="history-amount">—</span>
-            </div>
-        `;
-    }
-}
-
-function cancelSubscription() {
-    if (tg) {
-        tg.showConfirm('Вы уверены, что хотите отменить подписку?', (confirmed) => {
-            if (confirmed) {
-                userData.subscription = null;
-                loadUserSubscription();
-                tg.showAlert('Подписка отменена');
+function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
             }
         });
-    }
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+    });
 }
 
-function showSubscriptions() {
-    // Переключаемся на таб подписок
-    document.querySelector('[data-tab="subscriptions"]').click();
-}
-
-// Обработка событий Telegram
-if (tg) {
-    tg.onEvent('themeChanged', applyTheme);
+function initFixedButton() {
+    const fixedBtn = document.getElementById('fixed-bottom-btn');
+    const hero = document.getElementById('hero');
     
-    tg.onEvent('mainButtonClicked', () => {
-        const activeTab = document.querySelector('.nav-tab.active').dataset.tab;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                fixedBtn.classList.remove('visible');
+            } else {
+                fixedBtn.classList.add('visible');
+            }
+        });
+    });
+    
+    observer.observe(hero);
+}
+
+function initSmoothScroll() {
+    // Обработчики для всех CTA кнопок
+    document.addEventListener('click', (e) => {
+        const button = e.target.closest('button');
+        if (!button) return;
         
-        switch(activeTab) {
-            case 'subscriptions':
-                // Прокрутить к первой подписке
-                document.querySelector('.subscription-card').scrollIntoView({ behavior: 'smooth' });
-                break;
-            case 'services':
-                // Прокрутить к первой услуге
-                document.querySelector('.service-card').scrollIntoView({ behavior: 'smooth' });
-                break;
-            case 'about':
-                // Отправить данные для связи
-                tg.sendData(JSON.stringify({
-                    action: 'contact_request',
-                    user_id: tg.initDataUnsafe?.user?.id
-                }));
-                break;
+        const text = button.textContent.toLowerCase();
+        if (text.includes('начать') || text.includes('присоединиться') || text.includes('изменить') || text.includes('карьеру')) {
+            e.preventDefault();
+            scrollToSection('pricing');
         }
     });
 }
 
-// Закрытие модалок по клику вне их
+// Утилиты
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+function toggleFAQ(index) {
+    const faqItems = document.querySelectorAll('.faq-item');
+    const currentItem = faqItems[index];
+    const isActive = currentItem.classList.contains('active');
+    
+    // Закрываем все остальные
+    faqItems.forEach(item => item.classList.remove('active'));
+    
+    // Переключаем текущий
+    if (!isActive) {
+        currentItem.classList.add('active');
+    }
+}
+
+function handleSubscribe(planTitle, price) {
+    if (tg) {
+        // Отправляем данные боту
+        tg.sendData(JSON.stringify({
+            action: 'subscribe',
+            plan: planTitle,
+            price: price,
+            user_id: tg.initDataUnsafe?.user?.id
+        }));
+        
+        tg.showAlert(`Спасибо за выбор тарифа "${planTitle}"! Сейчас вы будете перенаправлены на оплату.`);
+    } else {
+        // Fallback для тестирования вне Telegram
+        alert(`Выбран тариф: ${planTitle} за ${price}₽`);
+    }
+}
+
+// Дополнительные обработчики для кнопок
 document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal')) {
-        e.target.classList.remove('active');
+    if (e.target.id === 'hero-cta-btn' || 
+        e.target.id === 'join-cta-btn' || 
+        e.target.id === 'final-cta-btn' ||
+        e.target.id === 'fixed-btn') {
+        scrollToSection('pricing');
     }
 });

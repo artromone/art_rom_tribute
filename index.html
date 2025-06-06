@@ -3,179 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Мой Creative Hub</title>
+    <title>IT Сообщество | Premium</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="creator-avatar">
-                <img src="https://via.placeholder.com/80x80/007AFF/ffffff?text=A" alt="Avatar" id="creator-avatar">
-            </div>
-            <div class="creator-info">
-                <h1 id="creator-name">Art Rom</h1>
-                <p id="creator-title">Creative Developer & Designer</p>
-                <div class="stats">
-                    <span class="stat">
-                        <span class="stat-number">1.2k</span>
-                        <span class="stat-label">подписчиков</span>
-                    </span>
-                    <span class="stat">
-                        <span class="stat-number">156</span>
-                        <span class="stat-label">постов</span>
-                    </span>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge" id="hero-badge"></div>
+                <h1 class="hero-title" id="hero-title"></h1>
+                <p class="hero-subtitle" id="hero-subtitle"></p>
+                <div class="hero-cta">
+                    <button class="btn btn-primary btn-large" id="hero-cta-btn"></button>
+                    <p class="hero-guarantee" id="hero-guarantee"></p>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <!-- Navigation -->
-    <nav class="nav-tabs">
-        <button class="nav-tab active" data-tab="subscriptions">Подписки</button>
-        <button class="nav-tab" data-tab="services">Услуги</button>
-        <button class="nav-tab" data-tab="about">О себе</button>
-        <button class="nav-tab" data-tab="my-subscription">Моя подписка</button>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Subscriptions Tab -->
-        <section id="subscriptions" class="tab-content active">
-            <div class="section-header">
-                <h2>Уровни подписки</h2>
-                <p>Выберите подходящий уровень поддержки</p>
+    <!-- Target Audience -->
+    <section class="target-audience" id="target-audience">
+        <div class="container">
+            <h2 class="section-title" id="target-title"></h2>
+            <div class="target-content">
+                <div class="target-problems" id="target-problems"></div>
+                <div class="target-checklist" id="target-checklist"></div>
             </div>
-            
-            <div class="subscription-levels" id="subscription-levels">
-                <!-- Динамически загружается из data.js -->
-            </div>
-        </section>
-
-        <!-- Services Tab -->
-        <section id="services" class="tab-content">
-            <div class="section-header">
-                <h2>Разовые услуги</h2>
-                <p>Индивидуальные предложения</p>
-            </div>
-            
-            <div class="services-grid" id="services-grid">
-                <!-- Динамически загружается из data.js -->
-            </div>
-        </section>
-
-        <!-- About Tab -->
-        <section id="about" class="tab-content">
-            <div class="section-header">
-                <h2>Обо мне</h2>
-            </div>
-            
-           
-<div class="about-content">
-    <div class="about-text">
-        <p>Привет! Я Артём Романович — Software Developer в крупной IT компании на 5.000 человек. Каждый день делаю свою жизнь лучше и рассказываю об этом вам 🚀</p>
-        
-        <h3>Мой путь в IT:</h3>
-        <ul>
-            <li>🎓 На 1 курсе за 10 дней получил оффер Middle C++ разработчик</li>
-            <li>💼 Прошел 200+ отказов перед первым успешным собеседованием</li>
-            <li>🏆 Победитель хакатона ЛЦТ 2022 с призом 1.000.000 ₽</li>
-            <li>📈 Опыт работы с крупными проектами и командами</li>
-        </ul>
-
-        <h3>Что я делаю:</h3>
-        <ul>
-            <li>🚀 Разрабатываю Telegram Mini Apps и веб-приложения</li>
-            <li>📝 Веду технический блог на Хабре (25+ рейтинг)</li>
-            <li>🎯 Помогаю джунам войти в IT и развиваться</li>
-            <li>🔧 Консультирую по архитектуре и принципам SOLID</li>
-            <li>🌟 Участвую в open source проектах (AmnesiaVPN)</li>
-        </ul>
-
-        <h3>Мой стек:</h3>
-        <div class="tech-stack">
-            <span class="tech-tag">C++</span>
-            <span class="tech-tag">JavaScript</span>
-            <span class="tech-tag">React</span>
-            <span class="tech-tag">Node.js</span>
-            <span class="tech-tag">Telegram API</span>
-            <span class="tech-tag">Linux</span>
-            <span class="tech-tag">Neovim</span>
-            <span class="tech-tag">Git</span>
         </div>
+    </section>
 
-        <h3>Достижения:</h3>
-        <ul>
-            <li>📊 1.2k подписчиков в Telegram канале</li>
-            <li>⭐ Статья на Хабре с 20k+ просмотров</li>
-            <li>🎖️ Сдал военные нормативы на максимум баллов</li>
-            <li>🧠 Создал систему "второго мозга" с 1300+ заметок</li>
-            <li>🏃‍♂️ Активно занимаюсь спортом: борьба, бег, скалодром</li>
-        </ul>
+    <!-- Value Proposition -->
+    <section class="value-prop" id="value-prop">
+        <div class="container">
+            <h2 class="section-title" id="value-title"></h2>
+            <div class="value-grid" id="value-grid"></div>
+        </div>
+    </section>
 
-        <h3>Философия:</h3>
-        <p><em>"Memento mori"</em> — помни о смерти. Жизнь ограничена, поэтому важно жить осознанно, развиваться и помогать другим расти. Каждый день стараюсь становиться лучше и делиться опытом с сообществом.</p>
-    </div>
-</div>
-        </section>
+    <!-- What's Inside -->
+    <section class="whats-inside" id="whats-inside">
+        <div class="container">
+            <h2 class="section-title" id="inside-title"></h2>
+            <div class="inside-content" id="inside-content"></div>
+        </div>
+    </section>
 
-        <!-- My Subscription Tab -->
-        <section id="my-subscription" class="tab-content">
-            <div class="section-header">
-                <h2>Моя подписка</h2>
-            </div>
-            
-            <div class="subscription-status" id="subscription-status">
-                <div class="status-card">
-                    <div class="status-icon">👤</div>
-                    <h3>Статус подписки</h3>
-                    <p class="status-text">У вас нет активной подписки</p>
-                    <button class="btn btn-primary" onclick="showSubscriptions()">
-                        Выбрать подписку
-                    </button>
+    <!-- About Expert -->
+    <section class="about-expert" id="about-expert">
+        <div class="container">
+            <div class="expert-content">
+                <div class="expert-photo">
+                    <img id="expert-photo" alt="Expert Photo">
+                </div>
+                <div class="expert-info">
+                    <h2 id="expert-name"></h2>
+                    <p id="expert-title"></p>
+                    <div id="expert-story"></div>
+                    <div class="expert-achievements" id="expert-achievements"></div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="subscription-history">
-                <h3>История платежей</h3>
-                <div class="history-list" id="payment-history">
-                    <div class="history-item">
-                        <span class="history-date">Нет данных</span>
-                        <span class="history-amount">—</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+    <!-- Stats & Results -->
+    <section class="stats-results" id="stats-results">
+        <div class="container">
+            <h2 class="section-title" id="stats-title"></h2>
+            <div class="stats-grid" id="stats-grid"></div>
+            <div class="results-content" id="results-content"></div>
+        </div>
+    </section>
 
-    <!-- Subscription Modal -->
-    <div class="modal" id="subscription-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">Подписка</h3>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Динамический контент -->
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title" id="testimonials-title"></h2>
+            <div class="testimonials-grid" id="testimonials-grid"></div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title" id="pricing-title"></h2>
+            <div class="pricing-grid" id="pricing-grid"></div>
+        </div>
+    </section>
+
+    <!-- How to Join -->
+    <section class="how-to-join" id="how-to-join">
+        <div class="container">
+            <h2 class="section-title" id="join-title"></h2>
+            <div class="join-steps" id="join-steps"></div>
+            <div class="join-cta">
+                <button class="btn btn-primary btn-large" id="join-cta-btn"></button>
+                <div class="join-guarantees" id="join-guarantees"></div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Service Modal -->
-    <div class="modal" id="service-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="service-modal-title">Услуга</h3>
-                <button class="modal-close" onclick="closeServiceModal()">&times;</button>
-            </div>
-            <div class="modal-body" id="service-modal-body">
-                <!-- Динамический контент -->
+    <!-- Bonus Section -->
+    <section class="bonus-section" id="bonus-section">
+        <div class="container">
+            <h2 class="section-title" id="bonus-title"></h2>
+            <div class="bonus-content" id="bonus-content"></div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title" id="faq-title"></h2>
+            <div class="faq-list" id="faq-list"></div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="final-cta">
+        <div class="container">
+            <div class="final-cta-content">
+                <h2 id="final-cta-title"></h2>
+                <p id="final-cta-subtitle"></p>
+                <div class="final-cta-urgency" id="final-cta-urgency"></div>
+                <button class="btn btn-primary btn-large pulse" id="final-cta-btn"></button>
+                <p class="final-cta-note" id="final-cta-note"></p>
             </div>
         </div>
+    </section>
+
+    <!-- Fixed Bottom Button -->
+    <div class="fixed-bottom-btn" id="fixed-bottom-btn">
+        <button class="btn btn-primary btn-large" id="fixed-btn"></button>
     </div>
 
-    <script src="data.js"></script>
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script src="content.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
