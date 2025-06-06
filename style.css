@@ -770,7 +770,7 @@ html {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
-    max-height: 320px;
+    padding-bottom: 16px;
 }
 
 .carousel-container {
@@ -780,7 +780,7 @@ html {
 }
 
 .pulse {
-    animation: pulse 1.33s infinite;
+    animation: pulse 2.5s infinite;
 }
 
 #bonus-cta {
