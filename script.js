@@ -1,450 +1,488 @@
-// Telegram Web App инициализация
+
+// Инициализация Telegram Web App
 const tg = window.Telegram?.WebApp;
 
 if (tg) {
     tg.ready();
     tg.expand();
-    setupTheme();
+    applyTheme();
     setupMainButton();
 }
 
-// Применение темы Telegram
-function setupTheme() {
+// Применение темы
+function applyTheme() {
     const theme = tg?.colorScheme || 'light';
     document.documentElement.setAttribute('data-theme', theme);
+    
+    if (tg?.themeParams) {
+        const root = document.documentElement;
+        Object.entries(tg.themeParams).forEach(([key, value]) => {
+            root.style.setProperty(`--tg-theme-${key.replace(/_/g, '-')}`, value);
+        });
+    }
 }
 
 // Настройка главной кнопки
 function setupMainButton() {
     if (!tg) return;
     
-    tg.MainButton.text = 'Присоединиться сейчас!';
-    tg.MainButton.color = '#34C759';
+    tg.MainButton.text = 'Присоединиться к сообществу';
+    tg.MainButton.color = '#007AFF';
     tg.MainButton.show();
     
     tg.MainButton.onClick(() => {
-        openSubscriptionModal();
+        showPricing();
     });
-}
-
-// DOM загружен
-document.addEventListener('DOMContentLoaded', function() {
-    initLanding();
-    setupAnimations();
-    setupFAQ();
-    setupStickyButton();
-    loadContent();
-});
-
-// Инициализация лендинга
-function initLanding() {
-    // Загрузка контента из data.js
-    loadContent();
-    
-    // Настройка обработчиков событий
-    setupEventListeners();
-    
-    // Запуск анимаций
-    setupAnimations();
 }
 
 // Загрузка контента
+document.addEventListener('DOMContentLoaded', function() {
+    loadContent();
+    initCarousels();
+    initFAQ();
+    initModal();
+});
+
 function loadContent() {
-    loadHeroSection();
-    loadTargetAudience();
-    loadValueSection();
-    loadContentSection();
-    loadExpertSection();
-    loadStatsSection();
+    // Hero Section
+    document.getElementById('hero-emoji').textContent = content.hero.backgroundEmoji;
+    document.getElementById('hero-title').textContent = content.hero.title;
+    document.getElementById('hero-headline').textContent = content.hero.headline;
+    document.getElementById('hero-description').textContent = content.hero.description;
+    document.getElementById('hero-cta').textContent = content.hero.ctaText;
+
+    // Target Audience
+    document.getElementById('target-title').textContent = content.targetAudience.title;
+    loadProblems();
+
+    // Value Proposition
+    document.getElementById('value-title').textContent = content.value.title;
+    loadBenefits();
+
+    // What's Inside
+    document.getElementById('inside-title').textContent = content.inside.title;
+    loadFeatures();
+
+    // About
+    document.getElementById('about-title').textContent = content.about.title;
+    loadAbout();
+
+    // Stats
+    document.getElementById('stats-title').textContent = content.stats.title;
+    loadStats();
+
+    // Testimonials
+    document.getElementById('testimonials-title').textContent = content.testimonials.title;
     loadTestimonials();
-    loadPricingSection();
+
+    // Pricing
+    document.getElementById('pricing-title').textContent = content.pricing.title;
+    loadPricing();
+
+    // How to Join
+    document.getElementById('join-title').textContent = content.howToJoin.title;
     loadHowToJoin();
-    loadBonusSection();
+
+    // Bonus
+    document.getElementById('bonus-title').textContent = content.bonus.title;
+    loadBonus();
+
+    // FAQ
+    document.getElementById('faq-title').textContent = content.faq.title;
     loadFAQ();
-    loadFinalCTA();
+
+    // Final CTA
+    document.getElementById('final-title').textContent = content.finalCta.title;
+    document.getElementById('final-subtitle').textContent = content.finalCta.subtitle;
+    document.getElementById('urgency').textContent = content.finalCta.urgency;
+    document.getElementById('final-cta-btn').textContent = content.finalCta.ctaText;
+    document.getElementById('final-guarantee').textContent = content.finalCta.guarantee;
 }
 
-// Загрузка Hero секции
-function loadHeroSection() {
-    const hero = landingData.hero;
+function loadProblems() {
+    const container = document.getElementById('problems-grid');
+    container.innerHTML = '';
     
-    document.querySelector('.community-name').textContent = hero.communityName;
-    document.querySelector('.hero-title').textContent = hero.mainHeadline;
-    document.querySelector('.hero-description').textContent = hero.description;
-    document.querySelector('.hero-cta').textContent = hero.ctaText;
+    content.targetAudience.problems.forEach(problem => {
+        const item = document.createElement('div');
+        item.className = 'problem-item';
+        item.innerHTML = `
+            <div class="problem-icon">${problem.icon}</div>
+            <div class="problem-text">${problem.text}</div>
+        `;
+        container.appendChild(item);
+    });
 }
 
-// Загрузка целевой аудитории
-function loadTargetAudience() {
-    const target = landingData.targetAudience;
+function loadBenefits() {
+    const container = document.getElementById('benefits-grid');
+    container.innerHTML = '';
     
-    document.querySelector('#target-audience .section-title').textContent = target.title;
-    
-    const problemsList = document.querySelector('.problems-list');
-    problemsList.innerHTML = target.problems.map(problem => 
-        `<li>${problem}</li>`
-    ).join('');
-    
-    document.querySelector('.target-subtitle').textContent = target.subtitle;
-}
-
-// Загрузка ценности
-function loadValueSection() {
-    const value = landingData.value;
-    
-    document.querySelector('#value .section-title').textContent = value.title;
-    
-    const benefitsGrid = document.querySelector('.benefits-grid');
-    benefitsGrid.innerHTML = value.benefits.map(benefit =>
-        `<div class="benefit-card fade-in">
-            <span class="benefit-icon">${benefit.icon}</span>
+    content.value.benefits.forEach(benefit => {
+        const card = document.createElement('div');
+        card.className = 'benefit-card';
+        card.innerHTML = `
+            <div class="benefit-icon">${benefit.icon}</div>
             <h3 class="benefit-title">${benefit.title}</h3>
             <p class="benefit-description">${benefit.description}</p>
-        </div>`
-    ).join('');
+        `;
+        container.appendChild(card);
+    });
 }
 
-// Загрузка контента сообщества
-function loadContentSection() {
-    const content = landingData.content;
+function loadFeatures() {
+    const container = document.getElementById('features-carousel');
+    container.innerHTML = '';
     
-    document.querySelector('#content .section-title').textContent = content.title;
-    
-    const formatsGrid = document.querySelector('.formats-grid');
-    formatsGrid.innerHTML = content.formats.map(format =>
-        `<div class="format-card fade-in">
-            <span class="format-icon">${format.icon}</span>
-            <div class="format-content">
-                <h3>${format.title}</h3>
-                <p class="format-description">${format.description}</p>
-                <span class="format-frequency">${format.frequency}</span>
+    content.inside.features.forEach(feature => {
+        const item = document.createElement('div');
+        item.className = 'carousel-item';
+        item.innerHTML = `
+            <div class="feature-card">
+                <div class="feature-icon">${feature.icon}</div>
+                <h3 class="feature-title">${feature.title}</h3>
+                <p class="feature-description">${feature.description}</p>
             </div>
-        </div>`
-    ).join('');
+        `;
+        container.appendChild(item);
+    });
 }
 
-// Загрузка информации об эксперте
-function loadExpertSection() {
-    const expert = landingData.expert;
+function loadAbout() {
+    document.getElementById('about-name').textContent = content.about.name;
+    document.getElementById('about-position').textContent = content.about.position;
+    document.getElementById('about-experience').textContent = content.about.experience;
+    document.getElementById('about-story').textContent = content.about.story;
     
-    document.querySelector('.expert-photo').src = expert.photo;
-    document.querySelector('.expert-name').textContent = expert.name;
-    document.querySelector('.expert-title').textContent = expert.title;
+    const achievementsContainer = document.getElementById('achievements');
+    achievementsContainer.innerHTML = '';
     
-    const achievementsList = document.querySelector('.achievements-list');
-    achievementsList.innerHTML = expert.achievements.map(achievement =>
-        `<li>${achievement}</li>`
-    ).join('');
-    
-    document.querySelector('.expert-story').textContent = expert.story;
+    content.about.achievements.forEach(achievement => {
+        const item = document.createElement('div');
+        item.className = 'achievement';
+        item.textContent = achievement;
+        achievementsContainer.appendChild(item);
+    });
 }
 
-// Загрузка статистики
-function loadStatsSection() {
-    const stats = landingData.stats;
+function loadStats() {
+    const container = document.getElementById('stats-grid');
+    container.innerHTML = '';
     
-    document.querySelector('#stats .section-title').textContent = stats.title;
-    
-    const statsGrid = document.querySelector('.stats-grid');
-    statsGrid.innerHTML = stats.numbers.map(stat =>
-        `<div class="stat-card fade-in">
+    content.stats.numbers.forEach(stat => {
+        const card = document.createElement('div');
+        card.className = 'stat-card';
+        card.innerHTML = `
             <div class="stat-value">${stat.value}</div>
             <div class="stat-label">${stat.label}</div>
-        </div>`
-    ).join('');
-    
-    const resultsList = document.querySelector('.results-list');
-    resultsList.innerHTML = stats.results.map(result =>
-        `<li>${result}</li>`
-    ).join('');
+        `;
+        container.appendChild(card);
+    });
 }
 
-// Загрузка отзывов
 function loadTestimonials() {
-    const testimonials = landingData.testimonials;
+    const container = document.getElementById('testimonials-carousel');
+    container.innerHTML = '';
     
-    const testimonialsGrid = document.querySelector('.testimonials-grid');
-    testimonialsGrid.innerHTML = testimonials.map(testimonial =>
-        `<div class="testimonial-card fade-in">
-            <div class="testimonial-header">
-                <img src="${testimonial.photo}" alt="${testimonial.name}" class="testimonial-photo">
-                <div class="testimonial-info">
-                    <h4>${testimonial.name}</h4>
-                    <p class="testimonial-role">${testimonial.role}</p>
+    content.testimonials.reviews.forEach(review => {
+        const item = document.createElement('div');
+        item.className = 'carousel-item';
+        item.innerHTML = `
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar">${review.avatar}</div>
+                    <div class="testimonial-info">
+                        <h4>${review.name}</h4>
+                        <p class="testimonial-role">${review.role}</p>
+                    </div>
                 </div>
+                <div class="testimonial-change">${review.before} → ${review.after}</div>
+                <p class="testimonial-text">"${review.text}"</p>
             </div>
-            <p class="testimonial-text">${testimonial.text}</p>
-            <div class="testimonial-result">
-                <span class="result-before">Было: ${testimonial.before}</span>
-                <span class="result-after">Стало: ${testimonial.after}</span>
-            </div>
-        </div>`
-    ).join('');
+        `;
+        container.appendChild(item);
+    });
 }
 
-// Загрузка тарифов
-function loadPricingSection() {
-    const pricing = landingData.pricing;
+function loadPricing() {
+    const container = document.getElementById('pricing-carousel');
+    container.innerHTML = '';
     
-    document.querySelector('#pricing .section-title').textContent = pricing.title;
-    
-    const pricingGrid = document.querySelector('.pricing-grid');
-    pricingGrid.innerHTML = pricing.plans.map(plan =>
-        `<div class="pricing-card ${plan.popular ? 'popular' : ''} fade-in">
-            <div class="pricing-header">
-                <h3 class="pricing-name">${plan.name}</h3>
-                <div class="pricing-price">${plan.price} ₽</div>
-                <div class="pricing-period">/${plan.period}</div>
+    content.pricing.plans.forEach(plan => {
+        const item = document.createElement('div');
+        item.className = 'carousel-item';
+        
+        const features = plan.features.map(feature => `<li>${feature}</li>`).join('');
+        
+        item.innerHTML = `
+            <div class="pricing-card ${plan.popular ? 'popular' : ''}">
+                ${plan.popular ? '<div class="popular-badge">Популярный</div>' : ''}
+                <div class="pricing-header">
+                    <h3 class="pricing-name">${plan.name}</h3>
+                    <div class="pricing-price">${plan.price}₽</div>
+                    <div class="pricing-period">/${plan.period}</div>
+                </div>
+                <ul class="pricing-features">${features}</ul>
+                <button class="btn btn-primary" onclick="selectPlan(${plan.id})">
+                    Выбрать план
+                </button>
             </div>
-            <ul class="pricing-features">
-                ${plan.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
-            <button class="btn btn-primary" onclick="selectPlan('${plan.name}')">
-                Выбрать тариф
-            </button>
-        </div>`
-    ).join('');
-    
-    const discountBanner = document.querySelector('.discount-banner');
-    discountBanner.textContent = pricing.discount.text;
+        `;
+        container.appendChild(item);
+    });
 }
 
-// Загрузка шагов присоединения
 function loadHowToJoin() {
-    const howToJoin = landingData.howToJoin;
+    const container = document.getElementById('steps-grid');
+    container.innerHTML = '';
     
-    document.querySelector('#how-to-join .section-title').textContent = howToJoin.title;
+    content.howToJoin.steps.forEach(step => {
+        const card = document.createElement('div');
+        card.className = 'step-card';
+        card.innerHTML = `
+            <div class="step-number">${step.step}</div>
+            <div class="step-content">
+                <h3>${step.title}</h3>
+                <p>${step.description}</p>
+            </div>
+        `;
+        container.appendChild(card);
+    });
     
-    const stepsList = document.querySelector('.steps-list');
-    stepsList.innerHTML = howToJoin.steps.map(step =>
-        `<div class="step-item fade-in">
-            <span class="step-number">${step.step}</span>
-            <span>${step.text}</span>
-        </div>`
-    ).join('');
-    
-    const guaranteesList = document.querySelector('.guarantees-list');
-    guaranteesList.innerHTML = howToJoin.guarantees.map(guarantee =>
-        `<li>${guarantee}</li>`
-    ).join('');
+    document.getElementById('guarantee').textContent = content.howToJoin.guarantee;
+    document.getElementById('join-cta').textContent = content.howToJoin.ctaText;
 }
 
-// Загрузка бонусов
-function loadBonusSection() {
-    const bonus = landingData.bonus;
+function loadBonus() {
+    const container = document.getElementById('bonus-grid');
+    container.innerHTML = '';
     
-    document.querySelector('#bonus .section-title').textContent = bonus.title;
-    
-    const bonusGrid = document.querySelector('.bonus-grid');
-    bonusGrid.innerHTML = bonus.freebies.map(item =>
-        `<div class="bonus-card fade-in">
-            <span class="bonus-icon">${item.icon}</span>
+    content.bonus.items.forEach(item => {
+        const bonusItem = document.createElement('div');
+        bonusItem.className = 'bonus-item';
+        bonusItem.innerHTML = `
+            <div class="bonus-icon">${item.icon}</div>
             <div class="bonus-content">
                 <h4>${item.title}</h4>
                 <p class="bonus-description">${item.description}</p>
-                <span class="bonus-value">Стоимость: ${item.value}</span>
+                <div class="bonus-value">Стоимость: ${item.value}</div>
             </div>
-        </div>`
-    ).join('');
+        `;
+        container.appendChild(bonusItem);
+    });
     
-    document.querySelector('.bonus-total').innerHTML = 
-        `Общая стоимость: <strong>${bonus.totalValue}</strong><br>${bonus.getForFree}`;
+    document.getElementById('bonus-value').textContent = content.bonus.totalValue;
+    document.getElementById('bonus-cta').textContent = content.bonus.ctaText;
 }
 
-// Загрузка FAQ
 function loadFAQ() {
-    const faq = landingData.faq;
+    const container = document.getElementById('faq-list');
+    container.innerHTML = '';
     
-    const faqList = document.querySelector('.faq-list');
-    faqList.innerHTML = faq.map((item, index) =>
-        `<div class="faq-item fade-in">
-            <button class="faq-question" data-index="${index}">
-                ${item.question}
-            </button>
+    content.faq.questions.forEach(item => {
+        const faqItem = document.createElement('div');
+        faqItem.className = 'faq-item';
+        faqItem.innerHTML = `
+            <div class="faq-question">
+                <span>${item.question}</span>
+                <span class="faq-icon">▼</span>
+            </div>
             <div class="faq-answer">
                 <p>${item.answer}</p>
             </div>
-        </div>`
-    ).join('');
-}
-
-// Загрузка финального призыва
-function loadFinalCTA() {
-    const finalCta = landingData.finalCta;
-    
-    document.querySelector('.final-cta-title').textContent = finalCta.title;
-    document.querySelector('.final-cta-subtitle').textContent = finalCta.subtitle;
-    document.querySelector('.urgency-text').textContent = finalCta.urgency;
-    document.querySelector('.limit-text').textContent = finalCta.limit;
-    document.querySelector('.final-cta-button').textContent = finalCta.buttonText;
-    document.querySelector('.last-chance').textContent = finalCta.lastChance;
-}
-
-// Настройка обработчиков событий
-function setupEventListeners() {
-    // CTA кнопки
-    document.querySelectorAll('.cta-button').forEach(button => {
-        button.addEventListener('click', handleCTAClick);
+        `;
+        container.appendChild(faqItem);
     });
+}
+
+// Инициализация каруселей
+function initCarousels() {
+    const carousels = [
+        { container: 'features-carousel', dots: 'features-dots' },
+        { container: 'testimonials-carousel', dots: 'testimonials-dots' },
+        { container: 'pricing-carousel', dots: 'pricing-dots' }
+    ];
     
-    // Кнопки тарифов
-    document.addEventListener('click', function(e) {
-        if (e.target.textContent.includes('Выбрать тариф')) {
-            e.preventDefault();
-            openSubscriptionModal();
+    carousels.forEach(carousel => {
+        setupCarousel(carousel.container, carousel.dots);
+    });
+}
+
+function setupCarousel(containerId, dotsId) {
+    const container = document.getElementById(containerId);
+    const dotsContainer = document.getElementById(dotsId);
+    
+    if (!container || !dotsContainer) return;
+    
+    const items = container.children;
+    const itemCount = items.length;
+    
+    if (itemCount <= 1) {
+        dotsContainer.style.display = 'none';
+        return;
+    }
+    
+    // Создаем точки
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < itemCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => scrollToItem(container, i));
+        dotsContainer.appendChild(dot);
+    }
+    
+    // Обработка скролла
+    let scrollTimeout;
+    container.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            updateActiveDot(container, dotsContainer);
+        }, 100);
+    });
+}
+
+function scrollToItem(container, index) {
+    const itemWidth = container.children[0].offsetWidth + 16; // включая gap
+    container.scrollTo({
+        left: itemWidth * index,
+        behavior: 'smooth'
+    });
+}
+
+function updateActiveDot(container, dotsContainer) {
+    const itemWidth = container.children[0].offsetWidth + 16;
+    const scrollLeft = container.scrollLeft;
+    const activeIndex = Math.round(scrollLeft / itemWidth);
+    
+    const dots = dotsContainer.children;
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.toggle('active', i === activeIndex);
+    }
+}
+
+// Инициализация FAQ
+function initFAQ() {
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.faq-question')) {
+            const faqItem = e.target.closest('.faq-item');
+            faqItem.classList.toggle('active');
         }
     });
 }
 
-// Обработка кликов по CTA
-function handleCTAClick(e) {
-    e.preventDefault();
-    openSubscriptionModal();
-}
-
-// Настройка FAQ
-function setupFAQ() {
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('faq-question')) {
-            const question = e.target;
-            const answer = question.nextElementSibling;
-            const isActive = question.classList.contains('active');
-            
-            // Закрываем все другие FAQ
-            document.querySelectorAll('.faq-question').forEach(q => {
-                q.classList.remove('active');
-                q.nextElementSibling.classList.remove('active');
-            });
-            
-            // Переключаем текущий
-            if (!isActive) {
-                question.classList.add('active');
-                answer.classList.add('active');
-            }
-        }
+// Инициализация модального окна
+function initModal() {
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('modal-close');
+    
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
     });
 }
 
-// Настройка липкой кнопки
-function setupStickyButton() {
-    const stickyButton = document.querySelector('.sticky-cta');
-    const hero = document.querySelector('.hero');
+function showModal(title, content) {
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                stickyButton.classList.remove('visible');
-            } else {
-                stickyButton.classList.add('visible');
-            }
-        });
-    });
-    
-    observer.observe(hero);
+    modalTitle.textContent = title;
+    modalBody.innerHTML = content;
+    modal.classList.add('active');
 }
 
-// Настройка анимаций
-function setupAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-    
-    // Наблюдаем за всеми элементами с fade-in
-    document.querySelectorAll('.fade-in').forEach(el => {
-        observer.observe(el);
-    });
+function closeModal() {
+    document.getElementById('modal').classList.remove('active');
 }
 
-// Выбор тарифа
-function selectPlan(planName) {
+// Функции действий
+function selectPlan(planId) {
+    const plan = content.pricing.plans.find(p => p.id === planId);
+    if (!plan) return;
+    
     if (tg) {
         tg.sendData(JSON.stringify({
             action: 'select_plan',
-            plan: planName,
-            user_id: tg.initDataUnsafe?.user?.id
-        }));
-    }
-    
-    openSubscriptionModal(planName);
-}
-
-// Открытие модального окна подписки
-function openSubscriptionModal(selectedPlan = null) {
-    if (tg) {
-        tg.sendData(JSON.stringify({
-            action: 'open_subscription',
-            selected_plan: selectedPlan,
+            plan_id: planId,
+            plan_name: plan.name,
+            price: plan.price,
             user_id: tg.initDataUnsafe?.user?.id
         }));
         
-        tg.showAlert('Переходим к оформлению подписки...');
+        tg.showAlert(`Вы выбрали тариф "${plan.name}". Сейчас откроется окно оплаты.`);
     } else {
-        // Симуляция для тестирования
-        alert(`Выбран тариф: ${selectedPlan || 'Базовый'}`);
+        showModal(`Тариф "${plan.name}"`, `
+            <div style="text-align: center;">
+                <h4>Цена: ${plan.price}₽/${plan.period}</h4>
+                <p>Для оплаты откройте приложение в Telegram</p>
+                <button class="btn btn-primary" onclick="closeModal()">Понятно</button>
+            </div>
+        `);
     }
 }
+
+function showPricing() {
+    document.querySelector('.pricing').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Обработка кнопок CTA
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'hero-cta' || 
+        e.target.id === 'join-cta' || 
+        e.target.id === 'final-cta-btn') {
+        showPricing();
+    }
+    
+    if (e.target.id === 'bonus-cta') {
+        showModal('Бонусы', `
+            <div>
+                <h4>Вы получите все бонусы при покупке любого тарифа:</h4>
+                <ul style="margin: 16px 0; padding-left: 20px;">
+                    ${content.bonus.items.map(item => 
+                        `<li style="margin: 8px 0;">${item.title} (${item.value})</li>`
+                    ).join('')}
+                </ul>
+                <p><strong>Общая стоимость: ${content.bonus.totalValue}</strong></p>
+                <button class="btn btn-primary" onclick="showPricing(); closeModal();">
+                    Выбрать тариф
+                </button>
+            </div>
+        `);
+    }
+});
 
 // Обработка событий Telegram
 if (tg) {
-    tg.onEvent('themeChanged', setupTheme);
+    tg.onEvent('themeChanged', applyTheme);
     
     tg.onEvent('mainButtonClicked', () => {
-        openSubscriptionModal();
+        showPricing();
     });
 }
 
-// Плавная прокрутка к якорям
-document.addEventListener('click', function(e) {
-    if (e.target.getAttribute('href')?.startsWith('#')) {
-        e.preventDefault();
-        const target = document.querySelector(e.target.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+// Плавная анимация при скролле
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -10% 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
         }
-    }
-});
-
-// Haptic feedback для мобильных
-function addHapticFeedback() {
-    if (tg) {
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', () => {
-                tg.HapticFeedback.impactOccurred('medium');
-            });
-        });
-    }
-}
-
-// Инициализация после загрузки
-window.addEventListener('load', function() {
-    addHapticFeedback();
-    
-    // Предзагрузка изображений
-    preloadImages();
-});
-
-// Предзагрузка изображений
-function preloadImages() {
-    const images = [
-        landingData.expert.photo,
-        ...landingData.testimonials.map(t => t.photo)
-    ];
-    
-    images.forEach(src => {
-        const img = new Image();
-        img.src = src;
     });
-}
+}, observerOptions);
 
+// Применяем анимацию к секциям
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
+});

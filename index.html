@@ -1,140 +1,157 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>IT Elite Club - Увеличьте зарплату в IT на 150%</title>
-    <meta name="description" content="Присоединяйтесь к сообществу топовых разработчиков и увеличьте свою зарплату в IT на 150% за 6 месяцев">
+    <title>IT Community Pro - Прокачай карьеру в IT</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 1. Hero Section - Заголовок и главная ценность -->
+    <!-- 1. Hero Section -->
     <section class="hero">
+        <div class="hero-bg">
+            <span class="hero-emoji" id="hero-emoji"></span>
+        </div>
         <div class="container">
-            <div class="hero-content">
-                <div class="community-name">IT Elite Club</div>
-                <h1 class="hero-title">Увеличьте свою зарплату в IT на 150% за 6 месяцев</h1>
-                <p class="hero-description">Присоединяйтесь к сообществу топовых разработчиков, где делятся реальными кейсами карьерного роста и инсайдерской информацией из крупнейших IT-компаний</p>
-                <button class="btn btn-primary hero-cta cta-button">Получить доступ сейчас</button>
+            <h1 class="hero-title" id="hero-title"></h1>
+            <h2 class="hero-headline" id="hero-headline"></h2>
+            <p class="hero-description" id="hero-description"></p>
+            <button class="btn btn-primary btn-large" id="hero-cta"></button>
+        </div>
+    </section>
+
+    <!-- 2. Target Audience -->
+    <section class="section target-audience">
+        <div class="container">
+            <h2 class="section-title" id="target-title"></h2>
+            <div class="problems-grid" id="problems-grid"></div>
+        </div>
+    </section>
+
+    <!-- 3. Value Proposition -->
+    <section class="section value">
+        <div class="container">
+            <h2 class="section-title" id="value-title"></h2>
+            <div class="benefits-grid" id="benefits-grid"></div>
+        </div>
+    </section>
+
+    <!-- 4. What's Inside -->
+    <section class="section inside">
+        <div class="container">
+            <h2 class="section-title" id="inside-title"></h2>
+            <div class="features-carousel">
+                <div class="carousel-container" id="features-carousel"></div>
+                <div class="carousel-dots" id="features-dots"></div>
             </div>
         </div>
     </section>
 
-    <!-- 2. Target Audience - Для кого это сообщество -->
-    <section id="target-audience" class="section">
+    <!-- 5. About -->
+    <section class="section about">
         <div class="container">
-            <h2 class="section-title">Это сообщество для вас, если вы:</h2>
-            <div class="card">
-                <ul class="problems-list"></ul>
-                <p class="section-subtitle target-subtitle">Мы поможем вам пройти путь от джуна до сеньора в 2 раза быстрее</p>
+            <h2 class="section-title" id="about-title"></h2>
+            <div class="about-card">
+                <div class="about-header">
+                    <div class="about-avatar">👨‍💻</div>
+                    <div class="about-info">
+                        <h3 id="about-name"></h3>
+                        <p id="about-position"></p>
+                        <span id="about-experience"></span>
+                    </div>
+                </div>
+                <p class="about-story" id="about-story"></p>
+                <div class="achievements" id="achievements"></div>
             </div>
         </div>
     </section>
 
-    <!-- 3. Value - Ценность и польза -->
-    <section id="value" class="section">
+    <!-- 6. Stats -->
+    <section class="section stats">
         <div class="container">
-            <h2 class="section-title">Что изменится в вашей жизни:</h2>
-            <div class="benefits-grid"></div>
+            <h2 class="section-title" id="stats-title"></h2>
+            <div class="stats-grid" id="stats-grid"></div>
         </div>
     </section>
 
-    <!-- 4. Content - Что внутри сообщества -->
-    <section id="content" class="section">
+    <!-- 7. Testimonials -->
+    <section class="section testimonials">
         <div class="container">
-            <h2 class="section-title">Что вас ждет внутри:</h2>
-            <div class="formats-grid"></div>
-        </div>
-    </section>
-
-    <!-- 5. Expert - Обо мне (экспертность) -->
-    <section id="expert" class="section">
-        <div class="container">
-            <h2 class="section-title">Кто ваш ментор</h2>
-            <div class="expert-card fade-in">
-                <img src="" alt="Артём Романович" class="expert-photo">
-                <h3 class="expert-name">Артём Романович</h3>
-                <p class="expert-title">Software Developer в компании на 5000+ человек</p>
-                <ul class="achievements-list"></ul>
-                <p class="expert-story"></p>
+            <h2 class="section-title" id="testimonials-title"></h2>
+            <div class="testimonials-carousel">
+                <div class="carousel-container" id="testimonials-carousel"></div>
+                <div class="carousel-dots" id="testimonials-dots"></div>
             </div>
         </div>
     </section>
 
-    <!-- 6. Stats - Цифры и результаты -->
-    <section id="stats" class="section">
+    <!-- 8. Pricing -->
+    <section class="section pricing">
         <div class="container">
-            <h2 class="section-title">Результаты сообщества:</h2>
-            <div class="stats-grid"></div>
-            <ul class="results-list"></ul>
-        </div>
-    </section>
-
-    <!-- 7. Testimonials - Отзывы и кейсы -->
-    <section id="testimonials" class="section">
-        <div class="container">
-            <h2 class="section-title">Истории успеха участников</h2>
-            <div class="testimonials-grid"></div>
-        </div>
-    </section>
-
-    <!-- 8. Pricing - Тарифы и стоимость -->
-    <section id="pricing" class="section">
-        <div class="container">
-            <h2 class="section-title">Выберите свой тариф:</h2>
-            <div class="discount-banner">🔥 Скидка 50% на первый месяц при оплате сегодня!</div>
-            <div class="pricing-grid"></div>
-        </div>
-    </section>
-
-    <!-- 9. How to Join - Как присоединиться -->
-    <section id="how-to-join" class="section">
-        <div class="container">
-            <h2 class="section-title">Как присоединиться:</h2>
-            <div class="steps-list"></div>
-            <ul class="guarantees-list"></ul>
-            <div class="text-center mt-32">
-                <button class="btn btn-success cta-button">Начать трансформацию сейчас!</button>
+            <h2 class="section-title" id="pricing-title"></h2>
+            <div class="pricing-carousel">
+                <div class="carousel-container" id="pricing-carousel"></div>
+                <div class="carousel-dots" id="pricing-dots"></div>
             </div>
         </div>
     </section>
 
-    <!-- 10. Bonus - Бонусный раздел -->
-    <section id="bonus" class="section">
+    <!-- 9. How to Join -->
+    <section class="section how-to-join">
         <div class="container">
-            <h2 class="section-title">Бонусы для новых участников:</h2>
-            <div class="bonus-grid"></div>
-            <div class="bonus-total"></div>
+            <h2 class="section-title" id="join-title"></h2>
+            <div class="steps-grid" id="steps-grid"></div>
+            <div class="guarantee" id="guarantee"></div>
+            <button class="btn btn-primary btn-large" id="join-cta"></button>
         </div>
     </section>
 
-    <!-- 11. FAQ - Часто задаваемые вопросы -->
-    <section id="faq" class="section">
+    <!-- 10. Bonus -->
+    <section class="section bonus">
         <div class="container">
-            <h2 class="section-title">Часто задаваемые вопросы</h2>
-            <div class="faq-list"></div>
+            <h2 class="section-title" id="bonus-title"></h2>
+            <div class="bonus-grid" id="bonus-grid"></div>
+            <div class="bonus-total">
+                <span>Общая стоимость: <strong id="bonus-value"></strong></span>
+                <span class="bonus-free">Бесплатно при покупке любого тарифа!</span>
+            </div>
+            <button class="btn btn-secondary" id="bonus-cta"></button>
         </div>
     </section>
 
-    <!-- 12. Final CTA - Финальный призыв к действию -->
-    <section class="final-cta">
+    <!-- 11. FAQ -->
+    <section class="section faq">
         <div class="container">
-            <h2 class="final-cta-title">Хватит откладывать свой рост!</h2>
-            <p class="final-cta-subtitle">Каждый день промедления — это упущенные возможности и деньги</p>
-            <div class="urgency-text">⏰ Акция действует только до конца месяца</div>
-            <div class="limit-text">🔥 Осталось всего 23 места</div>
-            <button class="btn btn-primary final-cta-button cta-button">Начать расти в IT прямо сейчас!</button>
-            <p class="last-chance">Это ваш шанс изменить карьеру и жизнь. Не упустите его!</p>
+            <h2 class="section-title" id="faq-title"></h2>
+            <div class="faq-list" id="faq-list"></div>
         </div>
     </section>
 
-    <!-- Sticky CTA Button -->
-    <div class="sticky-cta">
-        <button class="btn cta-button">Присоединиться к сообществу</button>
+    <!-- 12. Final CTA -->
+    <section class="section final-cta">
+        <div class="container">
+            <h2 class="final-title" id="final-title"></h2>
+            <p class="final-subtitle" id="final-subtitle"></p>
+            <div class="urgency" id="urgency"></div>
+            <button class="btn btn-primary btn-large pulse" id="final-cta-btn"></button>
+            <p class="final-guarantee" id="final-guarantee"></p>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title"></h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
     </div>
 
-    <script src="data.js"></script>
+    <script src="content.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
