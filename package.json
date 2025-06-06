@@ -1,13 +1,13 @@
 {
-  "name": "telegram-miniapp-landing",
+  "name": "telegram-community-landing",
   "version": "1.0.0",
-  "description": "Telegram Mini App Landing Page",
+  "description": "Modern Mobile Landing for Telegram Mini App Community",
   "main": "index.html",
   "scripts": {
-    "build": "echo 'No build step required'",
-    "start": "echo 'Static files served'"
+    "start": "echo 'Static files served'",
+    "build": "echo 'No build step required'"
   },
-  "keywords": ["telegram", "miniapp", "landing", "subscription"],
-  "author": "Your Name",
+  "keywords": ["telegram", "miniapp", "community", "landing"],
+  "author": "Art Rom",
   "license": "MIT"
 }
